@@ -1,0 +1,24 @@
+<!-- app/templates/index.html -->
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Repurpose Your Content</h2>
+  <form method="POST">
+    <label for="content">Paste your content:</label><br>
+    <textarea name="content" rows="8" cols="50" required></textarea><br><br>
+
+    <label for="platform">Choose platform:</label><br>
+    <select name="platform" required>
+      <option value="summary">Summary</option>
+      <option value="twitter">Twitter Thread</option>
+      <option value="linkedin">LinkedIn Post</option>
+    </select><br><br>
+
+    <button type="submit">Generate</button>
+  </form>
+
+  {% if result %}
+    <h3>Generated Content:</h3>
+    <pre>{{ result }}</pre>
+  {% endif %}
+{% endblock %}
