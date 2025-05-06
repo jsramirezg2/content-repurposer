@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 import anthropic
+from .input_handler import process_youtube_url, process_video_file
 
 # Load environment variables from .env file
 load_dotenv()
@@ -51,6 +52,22 @@ def repurpose_text(text: str, platform: str) -> str:
         return call_claude(prompt)
     else:
         return "Invalid platform selected. Please choose 'summary', 'twitter', or 'linkedin'."
+
+# Function to handle different input types and repurpose text
+def repurpose_text_input(input_data: str, platform: str, input_type: str = "text") -> str:
+    """
+    Repurpose text based on platform. Input can be plain text, a YouTube URL, or a video file.
+    """
+    if input_type == "youtube_url":
+        text = process_youtube_url(input_data)
+    elif input_type == "video_file":
+        text = process_video_file(input_data)
+    elif input_type == "text":
+        text = input_data
+    else:
+        return "Invalid input type. Please choose 'text', 'youtube_url', or 'video_file'."
+
+    return repurpose_text(text, platform)
 
 # example usage
 if __name__ == "__main__":
