@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Generated Content</h2>
+  {% if result %}
+    <pre>{{ result }}</pre>
+  {% else %}
+    <p>No content generated. Please try again.</p>
+  {% endif %}
+  <a href="{{ url_for('index') }}">Go Back</a>
+{% endblock %}
