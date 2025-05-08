@@ -1,7 +1,11 @@
 import os
+import logging
 from pytubefix import YouTube
 import moviepy.editor as mp
 import speech_recognition as sr
+
+# Configure logging
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def process_youtube_url(url: str) -> str:
     """
@@ -30,13 +34,16 @@ def process_youtube_url(url: str) -> str:
             audio_data = recognizer.record(source)
             text = recognizer.recognize_google(audio_data)
     except sr.RequestError as e:
+        logging.error(f"API request failed: {e}")
         text = f"API request failed: {e}"
     except sr.UnknownValueError:
+        logging.error("Speech was unintelligible.")
         text = "Speech was unintelligible."
+    except Exception as e:
+        logging.error(f"An unexpected error occurred: {e}")
+        text = f"An unexpected error occurred: {e}"
 
     # Clean up temporary files
-    os.remove(video_file)
-    os.remove(audio_path)
     return text
 
 def process_video_file(file_path: str) -> str:
@@ -54,9 +61,14 @@ def process_video_file(file_path: str) -> str:
             audio_data = recognizer.record(source)
             text = recognizer.recognize_google(audio_data)
     except sr.RequestError as e:
+        logging.error(f"API request failed: {e}")
         text = f"API request failed: {e}"
     except sr.UnknownValueError:
+        logging.error("Speech was unintelligible.")
         text = "Speech was unintelligible."
+    except Exception as e:
+        logging.error(f"An unexpected error occurred: {e}")
+        text = f"An unexpected error occurred: {e}"
 
     # Clean up temporary files
     os.remove(audio_path)
