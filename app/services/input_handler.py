@@ -3,7 +3,6 @@ import logging
 from pytubefix import YouTube
 import moviepy.editor as mp
 from whisper import load_model
-import speech_recognition as sr
 
 # Configure logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
