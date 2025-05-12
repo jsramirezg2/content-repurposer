@@ -18,16 +18,17 @@ def process_youtube_url(url: str) -> str:
     )
 
     video = yt.streams.get_lowest_resolution()
-    output_path = "."
+    output_path = "./temp"
     os.makedirs(output_path, exist_ok=True)
     video_file = video.download(output_path=output_path)
 
     # Convert video to audio
-    audio_path = os.path.join(output_path, "temp_audio.wav")
+    audio_path = "./temp/temp_audio.wav"
     video_clip = mp.VideoFileClip(video_file)
     video_clip.audio.write_audiofile(audio_path)
     video_clip.close()  # Ensure the video file is released
 
+    text = None
     try:
         # Convert audio to text using Whisper
         model = load_model("base")
@@ -36,10 +37,12 @@ def process_youtube_url(url: str) -> str:
     except Exception as e:
         logging.error(f"An unexpected error occurred: {e}")
         text = f"An unexpected error occurred: {e}"
-
-    # Clean up temporary files
-    os.remove(audio_path)
-    os.remove(video_file)
+    finally:
+        # Clean up temporary files
+        if os.path.exists(audio_path):
+            os.remove(audio_path)
+        if os.path.exists(video_file):
+            os.remove(video_file)
 
     return text
 
@@ -47,11 +50,17 @@ def process_video_file(file_path: str) -> str:
     """
     Extract audio from a video file and convert it to text.
     """
-    audio_path = "temp_audio.wav"
+    audio_path = "temp/temp_audio.wav"
     video = mp.VideoFileClip(file_path)
+    if video.audio is None:
+        video.close()
+        if os.path.exists(audio_path):
+            os.remove(audio_path)
+        return "The uploaded video does not contain an audio track."
     video.audio.write_audiofile(audio_path)
     video.close()  # Ensure the video file is released
 
+    text = None
     try:
         # Convert audio to text
         model = load_model("base")
@@ -60,9 +69,10 @@ def process_video_file(file_path: str) -> str:
     except Exception as e:
         logging.error(f"An unexpected error occurred: {e}")
         text = f"An unexpected error occurred: {e}"
-
-    # Clean up temporary files
-    os.remove(audio_path)
+    finally:
+        # Clean up temporary files
+        if os.path.exists(audio_path):
+            os.remove(audio_path)
     return text
 
 
