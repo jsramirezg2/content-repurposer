@@ -3,9 +3,28 @@
 
 {% block content %}
   <h2>Repurpose Your Content</h2>
-  <form method="POST">
-    <label for="content">Paste your content:</label><br>
-    <textarea name="content" rows="8" cols="50" required></textarea><br><br>
+  <form method="POST" enctype="multipart/form-data">
+    <label for="input_type">Choose input type:</label><br>
+    <select name="input_type" id="input_type" required>
+      <option value="text">Text</option>
+      <option value="youtube_url">YouTube URL</option>
+      <option value="video_file">Video File</option>
+    </select><br><br>
+
+    <div id="text_input">
+      <label for="content">Paste your content:</label><br>
+      <textarea name="content" rows="8" cols="50"></textarea><br><br>
+    </div>
+
+    <div id="youtube_input" style="display: none;">
+      <label for="youtube_url">YouTube URL:</label><br>
+      <input type="url" name="youtube_url"><br><br>
+    </div>
+
+    <div id="video_input" style="display: none;">
+      <label for="video_file">Upload Video File:</label><br>
+      <input type="file" name="video_file" accept="video/*"><br><br>
+    </div>
 
     <label for="platform">Choose platform:</label><br>
     <select name="platform" required>
@@ -16,5 +35,18 @@
 
     <button type="submit">Generate</button>
   </form>
+
+  <script>
+    const inputType = document.getElementById('input_type');
+    const textInput = document.getElementById('text_input');
+    const youtubeInput = document.getElementById('youtube_input');
+    const videoInput = document.getElementById('video_input');
+
+    inputType.addEventListener('change', function() {
+      textInput.style.display = this.value === 'text' ? 'block' : 'none';
+      youtubeInput.style.display = this.value === 'youtube_url' ? 'block' : 'none';
+      videoInput.style.display = this.value === 'video_file' ? 'block' : 'none';
+    });
+  </script>
 
 {% endblock %}

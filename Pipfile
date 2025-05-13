@@ -7,6 +7,9 @@ name = "pypi"
 python-dotenv = "*"
 anthropic = "*"
 flask = "*"
+moviepy = "==1.0.3"
+pytubefix = "*"
+openai-whisper = "*"
 
 [dev-packages]
 
