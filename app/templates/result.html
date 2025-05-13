@@ -1,11 +1,17 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <h2>Generated Content</h2>
+  <h2 class="text-2xl font-bold mb-4 text-center">Generated Content</h2>
+
   {% if result %}
-    <pre>{{ result }}</pre>
+    <div class="bg-white p-6 rounded shadow-md max-w-2xl mx-auto whitespace-pre-wrap">
+      {{ result }}
+    </div>
   {% else %}
-    <p>No content generated. Please try again.</p>
+    <p class="text-center text-red-500">No content generated. Please try again.</p>
   {% endif %}
-  <a href="{{ url_for('index') }}">Go Back</a>
+
+  <div class="text-center mt-6">
+    <a href="{{ url_for('index') }}" class="text-blue-600 hover:underline">← Back to Home</a>
+  </div>
 {% endblock %}

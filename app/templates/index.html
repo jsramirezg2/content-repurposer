@@ -1,39 +1,47 @@
-<!-- app/templates/index.html -->
 {% extends "base.html" %}
 
 {% block content %}
-  <h2>Repurpose Your Content</h2>
-  <form method="POST" enctype="multipart/form-data">
-    <label for="input_type">Choose input type:</label><br>
-    <select name="input_type" id="input_type" required>
-      <option value="text">Text</option>
-      <option value="youtube_url">YouTube URL</option>
-      <option value="video_file">Video File</option>
-    </select><br><br>
+  <h2 class="text-3xl font-bold mb-6 text-center">Repurpose Your Content</h2>
+
+  <form method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded shadow-md max-w-2xl mx-auto space-y-6">
+    <div>
+      <label for="input_type" class="block text-sm font-medium mb-1">Choose input type:</label>
+      <select name="input_type" id="input_type" required class="w-full border rounded p-2">
+        <option value="text">Text</option>
+        <option value="youtube_url">YouTube URL</option>
+        <option value="video_file">Video File</option>
+      </select>
+    </div>
 
     <div id="text_input">
-      <label for="content">Paste your content:</label><br>
-      <textarea name="content" rows="8" cols="50"></textarea><br><br>
+      <label for="content" class="block text-sm font-medium mb-1">Paste your content:</label>
+      <textarea name="content" rows="6" class="w-full border rounded p-2"></textarea>
     </div>
 
     <div id="youtube_input" style="display: none;">
-      <label for="youtube_url">YouTube URL:</label><br>
-      <input type="url" name="youtube_url"><br><br>
+      <label for="youtube_url" class="block text-sm font-medium mb-1">YouTube URL:</label>
+      <input type="url" name="youtube_url" class="w-full border rounded p-2">
     </div>
 
     <div id="video_input" style="display: none;">
-      <label for="video_file">Upload Video File:</label><br>
-      <input type="file" name="video_file" accept="video/*"><br><br>
+      <label for="video_file" class="block text-sm font-medium mb-1">Upload Video File:</label>
+      <input type="file" name="video_file" accept="video/*" class="w-full border rounded p-2">
     </div>
 
-    <label for="platform">Choose platform:</label><br>
-    <select name="platform" required>
-      <option value="summary">Summary</option>
-      <option value="twitter">Twitter Thread</option>
-      <option value="linkedin">LinkedIn Post</option>
-    </select><br><br>
+    <div>
+      <label for="platform" class="block text-sm font-medium mb-1">Choose platform:</label>
+      <select name="platform" required class="w-full border rounded p-2">
+        <option value="summary">Summary</option>
+        <option value="twitter">Twitter Thread</option>
+        <option value="linkedin">LinkedIn Post</option>
+      </select>
+    </div>
 
-    <button type="submit">Generate</button>
+    <div>
+      <button type="submit" class="w-full bg-blue-600 text-white font-semibold py-2 rounded hover:bg-blue-700">
+        Generate
+      </button>
+    </div>
   </form>
 
   <script>
@@ -42,11 +50,10 @@
     const youtubeInput = document.getElementById('youtube_input');
     const videoInput = document.getElementById('video_input');
 
-    inputType.addEventListener('change', function() {
+    inputType.addEventListener('change', function () {
       textInput.style.display = this.value === 'text' ? 'block' : 'none';
       youtubeInput.style.display = this.value === 'youtube_url' ? 'block' : 'none';
       videoInput.style.display = this.value === 'video_file' ? 'block' : 'none';
     });
   </script>
-
 {% endblock %}
