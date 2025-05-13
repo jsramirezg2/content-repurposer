@@ -3,6 +3,17 @@
 {% block content %}
   <h2 class="text-3xl font-bold mb-6 text-center">Repurpose Your Content</h2>
 
+  <!-- Loading spinner -->
+    <div id="spinner" class="fixed inset-0 bg-white bg-opacity-75 flex items-center justify-center z-50 hidden">
+    <svg class="animate-spin h-12 w-12 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor"
+        d="M4 12a8 8 0 018-8v8H4z">
+      </path>
+    </svg>
+  </div>
+
+
   <form method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded shadow-md max-w-2xl mx-auto space-y-6">
     <div>
       <label for="input_type" class="block text-sm font-medium mb-1">Choose input type:</label>
@@ -55,5 +66,15 @@
       youtubeInput.style.display = this.value === 'youtube_url' ? 'block' : 'none';
       videoInput.style.display = this.value === 'video_file' ? 'block' : 'none';
     });
+
+
+    // loading spinner
+    const form = document.querySelector('form');
+    const spinner = document.getElementById('spinner');
+
+    form.addEventListener('submit', () => {
+      spinner.classList.remove('hidden');
+    });
+
   </script>
 {% endblock %}
